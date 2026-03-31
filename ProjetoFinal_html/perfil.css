@@ -1,0 +1,202 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* HEADER */
+.header {
+  background-color:  #1F4EA3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  color: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.logo img {
+  height: 26px;
+}
+
+.material-icons {
+  font-size: 22px;
+}
+
+/* PERFIL */
+.perfil {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background-color: #ffffff;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  background-color: #000000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar .material-icons {
+  font-size: 30px;
+  color: white;
+}
+
+.info h3 {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+}
+
+.info p {
+  color: #000000;
+  font-size: 13px;
+}
+
+/* HISTÓRICO */
+.historico {
+  padding: 15px;
+}
+
+.historico h2 {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* CARD */
+.card {
+  background-color: #d9d9d9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #4e4e4e;
+  font-size: 14px;
+}
+
+.card small {
+  color: #aaa;
+  font-size: 11px;
+}
+
+/* VAZIO */
+#vazio {
+  text-align: center;
+  color: #888;
+  margin-top: 50px;
+}
+
+/* 📱 CELULAR */
+@media (max-width: 600px) {
+  .container {
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .perfil {
+    flex-direction: row;
+  }
+}
+
+/* 📲 TABLET */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .container {
+    max-width: 500px;
+  }
+}
+
+/* 💻 PC */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 450px;
+  }
+}
+/* 💻 TELAS GRANDES - CENTRALIZADO COM FUNDO */
+@media (min-width: 1200px) {
+
+  body {
+    background: linear-gradient(135deg, #1f4ea1);
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+  }
+
+}/* 💻 PC - OCUPAR TELA TODA E ORGANIZAR CONTEÚDO */
+@media (min-width: 1200px) {
+
+  body {
+    padding: 0;
+    display: block;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER ocupa topo inteiro */
+  .header {
+    width: 100%;
+  }
+
+  /* ÁREA PRINCIPAL CENTRALIZADA */
+  .form,
+  .grid,
+  .historico,
+  .camera-box {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+  }
+
+  /* PERFIL ajustado */
+  .perfil {
+    max-width: 900px;
+    margin: 20px auto;
+  }
+
+  /* TEXTAREA maior no PC */
+  textarea {
+    height: 120px;
+  }
+
+}

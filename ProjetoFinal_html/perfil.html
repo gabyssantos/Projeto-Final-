@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viesport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil</title>
+  <link rel="stylesheet" href="perfil.css">
+
+  <!-- Ícones -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="material-icons">home</span>
+
+    <div class="logo">
+      <img src="img.png" alt="Logo">
+      <span>RECLAMA MEU MUNICÍPIO</span>
+    </div>
+
+    <span class="material-icons">person</span>
+  </div>
+
+  <!-- PERFIL -->
+  <div class="perfil">
+    <div class="avatar">
+      <span class="material-icons">person</span>
+    </div>
+
+    <div class="info">
+      <h3 id="nome">Nome completo</h3>
+      <p id="email">E-mail</p>
+      <p id="endereco">Endereço</p>
+    </div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="historico">
+    <h2>Histórico de ocorrências</h2>
+    <div id="lista"></div>
+    <p id="vazio">Nenhuma ocorrência registrada</p>
+  </div>
+
+</div>
+
+<script>
+  // Dados do usuário (exemplo)
+  document.getElementById("nome").innerText = "Usuário Exemplo";
+  document.getElementById("email").innerText = "email@email.com";
+  document.getElementById("endereco").innerText = "Sua cidade";
+
+  // Buscar ocorrências salvas
+  const lista = document.getElementById("lista");
+  const vazio = document.getElementById("vazio");
+
+  let ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+
+  function renderizar() {
+    lista.innerHTML = "";
+
+    if (ocorrencias.length === 0) {
+      vazio.style.display = "block";
+      return;
+    }
+
+    vazio.style.display = "none";
+
+    ocorrencias.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.classList.add("card");
+
+      div.innerHTML = `
+        <p>${item.texto}</p>
+        <small>${item.data}</small>
+      `;
+
+      lista.appendChild(div);
+    });
+  }
+
+  renderizar();
+
+  // 🔥 EXEMPLO: adicionar ocorrência (pra testar)
+  function adicionarOcorrencia(texto) {
+    const nova = {
+      texto: texto,
+      data: new Date().toLocaleString()
+    };
+
+    ocorrencias.push(nova);
+    localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias));
+    renderizar();
+  }
+
+  // 👉 TESTE AUTOMÁTICO (pode apagar depois)
+  if (ocorrencias.length === 0) {
+    adicionarOcorrencia("Exemplo de ocorrência registrada");
+  }
+</script>
+
+</body>
+</html>

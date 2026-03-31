@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar Ocorrência</title>
+  <link rel="stylesheet" href="registrodeocorrencia.css">
+
+  <!-- Ícones -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="material-icons">home</span>
+
+    <div class="logo">
+      <img src="img.png" alt="Logo">
+      <span>RECLAMA MEU MUNICÍPIO</span>
+    </div>
+
+    <span class="material-icons">person</span>
+  </div>
+
+  <!-- CAMERA -->
+  <div class="camera-box">
+    <video id="video" autoplay playsinline></video>
+    <button id="capture"></button>
+  </div>
+
+  <!-- TEXTO -->
+  <textarea placeholder="Digite sua ocorrência"></textarea>
+  <textarea placeholder="Bairro da ocorrência"></textarea>
+  <textarea placeholder="Rua da ocorrência"></textarea>
+
+  <!-- BOTÃO -->
+  <div class="button">
+    <button>Enviar</button>
+  </div>
+
+</div>
+
+<script>
+  const video = document.getElementById("video");
+
+  // Ativar câmera
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+    })
+    .catch(err => {
+      alert("Não foi possível acessar a câmera!😢");
+      console.error(err);
+    });
+
+  // Botão de captura (simples feedback)
+  document.getElementById("capture").addEventListener("click", () => {
+    alert("Foto capturada! (você pode implementar salvar depois)");
+  });
+</script>
+
+</body>
+</html>
