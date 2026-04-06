@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocorrências</title>
+    <link rel="stylesheet" href="/style2.css">
+    <style>
+        body {
+            font-family: Arial;
+            background: #fafafa;
+            padding: 20px;
+        }
+
+        /* TOPO */
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        /* GRID */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* CARD INSTAGRAM STYLE */
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* HEADER */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        /* BADGE */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: white;
+            font-size: 11px;
+        }
+
+        .aberta { background: #0d6efd; }
+        .andamento { background: #ffc107; color: black; }
+        .concluida { background: #198754; }
+
+        /* IMAGEM */
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* BODY */
+        .card-body {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* BOTÕES */
+        .card-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .card-actions a {
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: white;
+        }
+
+        .btn-edit { background: #0d6efd; }
+        .btn-delete { background: #dc3545; }
+
+        /* RESPONSIVO */
+        @media(max-width:900px){
+            .container { grid-template-columns: repeat(2,1fr); }
+        }
+
+        @media(max-width:600px){
+            .container { grid-template-columns: 1fr; }
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+
+<!-- Menu -->
+<div th:replace="~{/fragments/menu.html :: menu}"></div>
+
+<div class="topo">
+    <h2>Ocorrências</h2>
+    <input type="text" id="busca" placeholder="🔎 Buscar...">
+    <a th:href="@{/ocorrencia/cadastro}" class="btn btn-success">Cadastrar Novo</a>
+</div>
+
+<div class="container" id="listaCards">
+
+    <!-- LOOP -->
+    <div class="card" th:each="p : ${ocorrencias}">
+
+        <div class="card-header">
+            <span th:text="${p.dataOcorrencia}"></span>
+
+            <span class="badge"
+                  th:classappend="${p.status == 'ABERTA'} ? 'aberta' :
+                                  (${p.status == 'EM_ANDAMENTO'} ? 'andamento' : 'concluida')"
+                  th:text="${p.status}">
+            </span>
+        </div>
+
+        <img th:if="${p.fotoOcorrencia != null}"
+             th:src="@{'/foto_ocorrencia/' + ${p.fotoOcorrencia}}">
+
+        <img th:if="${p.fotoOcorrencia == null}"
+             src="/foto_ocorrencia/default.png">
+
+        <div class="card-body">
+            <p><strong>Rua:</strong> <span th:text="${p.rua}"></span></p>
+            <p><strong>Bairro:</strong> <span th:text="${p.bairro}"></span></p>
+            <p th:text="${p.descricaoOcorrencia}"></p>
+        </div>
+
+        <div class="card-actions">
+            <a th:href="@{/ocorrencia/alterar/{id}(id=${p.id})}" class="btn-edit">Alterar</a>
+            <a th:href="@{/ocorrencia/excluir/{id}(id=${p.id})}"
+               onclick="return confirm('Deseja excluir?')"
+               class="btn-delete">Excluir</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // 🔎 BUSCA DINÂMICA
+    document.getElementById("busca").addEventListener("keyup", function() {
+        let filtro = this.value.toLowerCase();
+        let cards = document.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            let texto = card.innerText.toLowerCase();
+            card.style.display = texto.includes(filtro) ? "block" : "none";
+        });
+    });
+
+
+    // ♾ SCROLL INFINITO (simulado)
+    let itensVisiveis = 6;
+    const cards = document.querySelectorAll(".card");
+
+    function mostrarMais() {
+        cards.forEach((card, index) => {
+            if(index < itensVisiveis){
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    // inicial
+    mostrarMais();
+
+    window.addEventListener("scroll", () => {
+        if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 100){
+            itensVisiveis += 3;
+            mostrarMais();
+        }
+    });
+</script>
+<!-- Footer -->
+<div th:replace="~{/fragments/footer.html :: footer}"></div>
+</body>
+</html>

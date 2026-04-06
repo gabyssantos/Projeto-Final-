@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="/css/ocorrencia.css">
+
+    <!-- Ícones (Material Icons) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+
+<body class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <span class="material-icons">home</span>
+
+        <div class="logo">
+            <img src="/img/logoreclamamairinque.png" alt="Logo">
+            <span>RECLAMA MEU MUNICÍPIO</span>
+        </div>
+
+        <span class="material-icons">person</span>
+    </div>
+
+    <!-- FORM -->
+    <div class="form">
+
+        <label>Nome Completo</label>
+        <input type="text" placeholder="Campo não obrigatório*" th:field="*{nome}">
+
+        <label>Telefone</label>
+        <input type="text" placeholder="Campo não obrigatório*" th:field="*{telefone}">
+
+
+
+        <h2>Registrar Reclamação</h2>
+
+        <form id="formReclamacao">
+            <input type="text" id="rua" placeholder="Rua" required th:field="*{rua}">
+            <input type="text" id="bairro" placeholder="Bairro" required th:field="*{bairro}">
+
+            <input type="text" id="descricao" placeholder="Descrição da reclamação" required th:field="*{descricaoOcorrencia}">
+
+            <label for="ocorrencia"><strong>Selecione sua ocorrência:</strong></label>
+            <select id="ocorrencia" name="ocorrencia"  th:field="*{status}">
+                <option value="Limpeza da cidade">Limpeza da cidade</option>
+                <option value="Posto de saude">Posto de saude</option>
+                <option value="Ruas asfaltadas">Ruas asfaltadas</option>
+                <option value="Iluminacao publica">Iluminacao publica</option>
+                <option value="Coleta de lixo">Coleta de lixo</option>
+                <option value="Areas de lazer">Areas de lazer</option>
+                <option value="Horario de onibus">Horario de onibus</option>
+                <option value="Servicos digitais">Servicos digitais</option>
+            </select>
+            <button type="button" id="btnFoto">📷 Adicionar Foto</button>
+
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <h3>Adicionar Foto</h3>
+
+                    <div class="botoes">
+                        <button class="btn" id="abrirCamera">📷 Câmera</button>
+
+                        <label class="btn">
+                            📁 Arquivo
+                            <input type="file" accept="image/*" id="fileInput" th:field="*{fotoOcorrencia}">
+                        </label>
+                    </div>
+
+                    <video id="video" autoplay></video>
+                    <button id="tirarFoto">📸 Tirar Foto</button>
+                    <button id="fecharModal">Fechar</button>
+                </div>
+            </div>
+            <button class="btn-principal"><a  href="/ocorrencia/card">Salvar</a></button>
+        </form>
+
+
+        <script src="script.js"></script>
+    </div>
+</body>
+
+</html>
