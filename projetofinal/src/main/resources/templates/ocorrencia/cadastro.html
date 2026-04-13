@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/ocorrencia.css">
+
+    <!-- Ícones (Material Icons) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* BOTÃO CÂMERA */
+        .btn-camera {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #0d6efd;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* MODAL */
+        .modal-foto {
+            display: none;
+            position: fixed;
+            z-index: 9999; /* 🔥 garante ficar acima de tudo */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content-foto {
+            background: white;
+            padding: 25px;
+            width: 320px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .botoes-foto {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .botoes-foto button {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #198754;
+            color: white;
+            cursor: pointer;
+        }
+
+        .fechar {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+
+
+<body class="container">
+
+<!-- HEADER -->
+<header class="topo">
+    <div class="menu-icon">☰</div>
+
+    <img src="img/logomk.png" alt="Logo Reclama Mairinque" class="logo">
+
+    <div class="whatsapp">
+        <img src="img/whatsapp.png" alt="WhatsApp">
+    </div>
+</header>
+
+    <!-- FORM -->
+    <div class="form">
+        <form id="form-cadastro"
+         th:action="@{/ocorrencia/salvar}"
+         th:object="${ocorrencia}"
+         method="post"
+         enctype="multipart/form-data">
+
+        <label>Nome Completo</label>
+        <input type="text" placeholder="Campo não obrigatório*" th:field="*{nome}">
+
+        <label>Telefone</label>
+        <input type="text" placeholder="Campo não obrigatório*" th:field="*{telefone}">
+
+
+
+        <h2>Registrar Reclamação</h2>
+
+
+            <input type="text" id="rua" placeholder="Rua" required th:field="*{rua}">
+            <input type="text" id="bairro" placeholder="Bairro" required th:field="*{bairro}">
+
+            <input type="text" id="descricao" placeholder="Descrição da reclamação" required th:field="*{descricaoOcorrencia}">
+
+            <label for="ocorrencia"><strong>Selecione sua ocorrência:</strong></label>
+            <select id="ocorrencia" name="ocorrencia"  th:field="*{status}">
+                <option value="Limpeza da cidade">Limpeza da cidade</option>
+                <option value="Posto de saude">Posto de saude</option>
+                <option value="Ruas asfaltadas">Ruas asfaltadas</option>
+                <option value="Iluminacao publica">Iluminacao publica</option>
+                <option value="Coleta de lixo">Coleta de lixo</option>
+                <option value="Areas de lazer">Areas de lazer</option>
+                <option value="Horario de onibus">Horario de onibus</option>
+                <option value="Servicos digitais">Servicos digitais</option>
+            </select>
+
+            <!-- FOTO -->
+            <div class="form-group">
+                <label>Foto:</label>
+
+                <button type="button" class="btn-camera" onclick="abrirModalFoto()">
+                    📷 Tirar / Selecionar Foto
+                </button>
+
+                <!-- input real usado no backend -->
+                <input type="file" id="inputArquivo" name="arquivoFoto" accept="image/*" hidden>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn btn-success">Salvar</button>
+                <a th:href="@{/ocorrencia/listagem}" class="btn btn-alter">Voltar para Lista</a>
+            </div>
+
+
+        </form>
+    </div>
+
+
+
+    <!-- MODAL -->
+    <div id="modalFoto" class="modal-foto">
+        <div class="modal-content-foto">
+
+            <h3>Selecionar Foto</h3>
+
+            <div class="botoes-foto">
+                <button onclick="selecionarArquivo()">📁 Arquivo</button>
+                <button onclick="iniciarCamera()">📷 Câmera</button>
+            </div>
+
+            <!-- CÂMERA -->
+            <video id="video" width="100%" autoplay style="display:none;"></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+
+            <button id="btnCapturar" onclick="capturarFoto()" style="display:none;">
+                📸 Capturar
+            </button>
+
+            <button class="fechar" onclick="fecharModalFoto()">Fechar</button>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // STATUS sempre ABERTA
+        document.addEventListener("DOMContentLoaded", function() {
+            const status = document.getElementById("status");
+            status.value = "ABERTA";
+
+            status.addEventListener("change", function() {
+                this.value = "ABERTA";
+            });
+        });
+
+        // MODAL
+    let stream;
+
+    function abrirModalFoto() {
+        document.getElementById("modalFoto").style.display = "flex";
+    }
+
+    function fecharModalFoto() {
+        document.getElementById("modalFoto").style.display = "none";
+
+        // parar câmera
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+
+        document.getElementById("video").style.display = "none";
+        document.getElementById("btnCapturar").style.display = "none";
+    }
+
+    // 📁 ARQUIVO NORMAL
+    function selecionarArquivo() {
+        const input = document.getElementById("inputArquivo");
+        input.click();
+        fecharModalFoto();
+    }
+
+    // 📷 INICIAR CÂMERA REAL
+    function iniciarCamera() {
+        const video = document.getElementById("video");
+        const botao = document.getElementById("btnCapturar");
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(s) {
+                stream = s;
+                video.srcObject = stream;
+
+                video.style.display = "block";
+                botao.style.display = "inline-block";
+            })
+            .catch(function(err) {
+                alert("Erro ao acessar câmera: " + err);
+            });
+    }
+
+    // 📸 CAPTURAR FOTO
+    function capturarFoto() {
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const input = document.getElementById("inputArquivo");
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0);
+
+        canvas.toBlob(function(blob) {
+            const file = new File([blob], "foto.png", { type: "image/png" });
+
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+
+            input.files = dataTransfer.files;
+
+            fecharModalFoto();
+        });
+    }
+    </script>
+</body>
+
+</html>
