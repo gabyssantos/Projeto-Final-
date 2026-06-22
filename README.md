@@ -1,8 +1,8 @@
-🏙️ Reclama Mairinque
+#🏙️ Reclama Mairinque
 
 Sistema web desenvolvido para facilitar a comunicação entre os cidadãos e a administração pública, permitindo o registro e acompanhamento de ocorrências urbanas no município.
 
-📖 Sobre o Projeto
+#📖 Sobre o Projeto
 
 O Reclama Mairinque é uma plataforma que permite que moradores relatem problemas encontrados na cidade, como:
 
@@ -15,7 +15,7 @@ Outras ocorrências urbanas.
 
 O objetivo é fornecer ao poder público informações mais precisas sobre os problemas existentes, auxiliando na identificação e priorização das demandas da população.
 
-🚀 Funcionalidades
+#🚀 Funcionalidades
 Cadastro e autenticação de usuários;
 Registro de ocorrências urbanas;
 Upload de imagens para comprovação do problema;
@@ -23,7 +23,7 @@ Informar o CEP da localização da ocorrência;
 Consulta das ocorrências cadastradas;
 Gerenciamento das informações pelo sistema;
 Interface simples e intuitiva para os cidadãos.
-🛠️ Tecnologias Utilizadas
+#🛠️ Tecnologias Utilizadas
 Backend
 Java
 Banco de Dados
@@ -32,7 +32,7 @@ Frontend
 HTML5
 CSS3
 JavaScript
-📂 Estrutura do Projeto
+#📂 Estrutura do Projeto
 Reclama-Mairinque/
 
 │
@@ -53,11 +53,11 @@ Reclama-Mairinque/
 
 └── README.md
 
-🎯 Objetivo Social
+#🎯 Objetivo Social
 
 Muitos problemas urbanos permanecem sem solução por falta de comunicação eficiente entre a população e os órgãos responsáveis. O sistema busca aproximar cidadãos e governo municipal, permitindo que ocorrências sejam registradas de forma rápida e organizada, contribuindo para uma cidade mais bem cuidada.
 
-⚙️ Como Executar o Projeto
+#⚙️ Como Executar o Projeto
 Pré-requisitos
 Java JDK 17 ou superior
 MySQL
@@ -70,7 +70,7 @@ cd reclama-mairinque
 Configure o banco de dados MySQL.
 Atualize as credenciais de conexão no arquivo de configuração do projeto.
 Execute a aplicação pela sua IDE ou via terminal.
-📸 Exemplo de Uso
+#📸 Exemplo de Uso
 O cidadão acessa o sistema.
 Realiza o cadastro ou login.
 Registra uma ocorrência.
@@ -81,6 +81,6 @@ A ocorrência fica disponível para análise e acompanhamento.
 
 Contribuições são bem-vindas. Caso deseje colaborar com melhorias, correções ou novas funcionalidades, fique à vontade para abrir uma issue ou enviar um pull request.
 
-📄 Licença
+#📄 Licença
 
 Este projeto está licenciado sob a Licença MIT.
