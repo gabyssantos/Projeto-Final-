@@ -1,8 +1,8 @@
-#🏙️ Reclama Mairinque
+##🏙️ Reclama Mairinque
 
 Sistema web desenvolvido para facilitar a comunicação entre os cidadãos e a administração pública, permitindo o registro e acompanhamento de ocorrências urbanas no município.
 
-#📖 Sobre o Projeto
+##📖 Sobre o Projeto
 
 O Reclama Mairinque é uma plataforma que permite que moradores relatem problemas encontrados na cidade, como:
 
