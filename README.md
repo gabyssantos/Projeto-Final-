@@ -34,15 +34,25 @@ CSS3
 JavaScript
 📂 Estrutura do Projeto
 Reclama-Mairinque/
+
 │
+
 ├── src/
+
 ├── templates/
+
 ├── static/
+
 │   ├── css/
+
 │   ├── js/
+
 │   └── imagens/
+
 ├── banco_de_dados/
+
 └── README.md
+
 🎯 Objetivo Social
 
 Muitos problemas urbanos permanecem sem solução por falta de comunicação eficiente entre a população e os órgãos responsáveis. O sistema busca aproximar cidadãos e governo municipal, permitindo que ocorrências sejam registradas de forma rápida e organizada, contribuindo para uma cidade mais bem cuidada.
